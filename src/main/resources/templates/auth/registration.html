@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/auth/register}" th:object="${user}">
+    <label for="username">Enter username</label>
+    <input type="text" th:field="*{username}" id="username" />
+    <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">username error</div>
+    <br>
+    <label for="email">Enter email</label>
+    <input type="text" th:field="*{email}" id="email" />
+    <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email error</div>
+    <br>
+    <label for="age">Enter age</label>
+    <input type="number" th:field="*{age}" id="age" />
+    <div style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">age error</div>
+    <br>
+    <label for="password">Enter password</label>
+    <input type="password" th:field="*{password}" id="password" />
+    <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password error</div>
+    <br>
+    <input type="submit" value="Sign up!"/>
+</form>
+<br>
+<a href="/auth/login">Sign in</a>
+</body>
+</html>

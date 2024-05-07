@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+    <style>
+        body {
+            color: #1F2161;
+        }
+        p {
+            text-align: justify;
+        }
+        a {
+            color: #0F773C;
+        }
+        a:hover {
+            color: #CB831E;
+            text-decoration: none;
+        }
+        @keyframes swing {
+            0% {
+                transform: rotate(0deg);
+            }
+            10% {
+                transform: rotate(10deg);
+            }
+            30% {
+                transform: rotate(0deg);
+            }
+            40% {
+                transform: rotate(-10deg);
+            }
+            50% {
+                transform: rotate(0deg);
+            }
+            60% {
+                transform: rotate(5deg);
+            }
+            70% {
+                transform: rotate(0deg);
+            }
+            80% {
+                transform: rotate(-5deg);
+            }
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+        .htmlBody #sidebarWrapper,
+        #sidebarWrapper .sidebar-brand > a,
+        .htmlBody .page-content,
+        #sidebarWrapper .navMenu ul li a,
+        #show-sidebar,
+        .htmlBody.toggled #sidebarWrapper {
+            left: 0px;
+        }
+        @media screen and (min-width: 768px) {
+            .htmlBody.toggled .page-content {
+                padding-left: 300px;
+            }
+        }
+        #show-sidebar {
+            position: fixed;
+            left: 0;
+            top: 1.3rem;
+            border-radius: 0 4px 4px 0px;
+            width: 2.5rem;
+            transition-delay: 0.3s;
+            z-index: 2;
+            background-color: #102A83;
+            color: #FEFDFB;
+            font-size: 1.3em;
+            padding-bottom: 0;
+        }
+        #hamburger {
+            margin-bottom: 0;
+        }
+        .htmlBody.toggled #show-sidebar {
+            left: -40px;
+        }
+        .htmlBody.toggled #close-sidebar {
+            color: #1F2161;
+        }
+        .htmlBody.toggled #close-sidebar:hover {
+            color: #0F773C;
+        }
+        #sidebarWrapper {
+            width: 18.8rem;
+            height: 100%;
+            max-height: 100%;
+            position: fixed;
+            top: 0;
+            left: -300px;
+            z-index: 2;
+            overflow-y: auto;
+            background: #F2F2F2;
+        }
+        #sidebarWrapper ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        #sidebarWrapper .sidebar-brand {
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+        }
+        #sidebarWrapper .sidebar-brand > a {
+            text-transform: uppercase;
+            font-weight: bold;
+            flex-grow: 1;
+        }
+        #sidebarWrapper .sidebar-brand #close-sidebar {
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+        .navMenu {
+            padding-bottom: 10px;
+        }
+        .navMenu ul li a {
+            padding: 8px 30px 8px 20px;
+        }
+        .sidebar-brand > a, .navMenu ul li a {
+            color: #1F2161;
+        }
+        .navMenu ul li:hover > a,
+        .sidebar-brand > a:hover {
+            color: #0F773C;
+        }
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div class="htmlBody toggled">
+    <nav id="sidebarWrapper">
+        <div class="sidebar-content">
+            <div class="sidebar-brand">
+
+            </div>
+            <div class="sidebar-header">
+
+            </div>
+            <div class="navMenu">
+                <ul>
+                    <li>
+                        <h4 class="navHeader mt-4 pl-2">
+                            <a href="/admin">Admin</a>
+                        </h4>
+                        <h4 class="navHeader mt-4 pl-2">
+                            <a href="/users">Users</a>
+                        </h4>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="page-content">
+        <h4>
+            <span th:text="${user.getEmail()} + ' with roles: '"></span>
+            <span th:each="role : ${user.getRoles()}" th:text="${role} + ', '"></span>
+        </h4>
+        <main class="container-fluid">
+            <h1>Welcome!</h1>
+            <form th:action="@{/logout}" th:method="POST">
+                <input type="submit" value="Logout">
+            </form>
+        </main>
+    </div>
+</div>
+</body>
+</html>

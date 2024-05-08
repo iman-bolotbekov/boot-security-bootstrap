@@ -36,22 +36,18 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findByUsername(username);
-
         if (user.isEmpty()) {
             throw new UsernameNotFoundException("User not found!");
         }
         Hibernate.initialize(user.get().getRoles());
         return new CustomUserDetails(user.get());
     }
-
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
-
     public List<User> findAll() {
         return userRepository.findAll();
     }
-
     public User findOne(int id) {
         Optional<User> foundPerson = userRepository.findById(id);
         return foundPerson.orElse(null);

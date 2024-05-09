@@ -6,21 +6,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.kata.spring.boot_security.demo.models.User;
-import ru.kata.spring.boot_security.demo.security.CustomUserDetails;
-import ru.kata.spring.boot_security.demo.services.CustomUserDetailsService;
+import ru.kata.spring.boot_security.demo.security.UserDetailsImpl;
+import ru.kata.spring.boot_security.demo.services.UserDetailsServiceImpl;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/users")
 public class UserController {
-    private final CustomUserDetailsService service;
-    public UserController(CustomUserDetailsService service) {
+    private final UserDetailsServiceImpl service;
+    public UserController(UserDetailsServiceImpl service) {
         this.service = service;
     }
     @GetMapping
     public ModelAndView index(ModelAndView modelAndView) {
-        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = service.findOne(customUserDetails.getUser().getId());
+        UserDetailsImpl userDetailsImpl = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = service.findOne(userDetailsImpl.getUser().getId());
         Hibernate.initialize(user.getRoles());
         modelAndView.addObject("user", user);
         modelAndView.setViewName("users/index");

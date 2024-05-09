@@ -1,7 +1,7 @@
 package ru.kata.spring.boot_security.demo.config;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.kata.spring.boot_security.demo.services.CustomUserDetailsService;
+import ru.kata.spring.boot_security.demo.services.UserDetailsServiceImpl;
 
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,11 +17,11 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfig {
-    private final CustomUserDetailsService customUserDetailsService;
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
     private final SuccessUserHandler successUserHandler;
-    public SecurityConfig(CustomUserDetailsService customUserDetailsService,
+    public SecurityConfig(UserDetailsServiceImpl userDetailsServiceImpl,
                           SuccessUserHandler successUserHandler) {
-        this.customUserDetailsService = customUserDetailsService;
+        this.userDetailsServiceImpl = userDetailsServiceImpl;
         this.successUserHandler = successUserHandler;
     }
     @Bean
@@ -41,7 +41,7 @@ public class SecurityConfig {
                 .logout((logout) ->
                         logout.logoutUrl("/logout").logoutSuccessUrl("/auth/login"))
                 .getSharedObject(AuthenticationManagerBuilder.class)
-                .userDetailsService(customUserDetailsService)
+                .userDetailsService(userDetailsServiceImpl)
                 .passwordEncoder(passwordEncoder());
         return http.build();
     }

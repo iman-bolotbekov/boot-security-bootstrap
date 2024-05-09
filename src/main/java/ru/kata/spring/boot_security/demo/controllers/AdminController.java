@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.servlet.ModelAndView;
 import ru.kata.spring.boot_security.demo.models.User;
-import ru.kata.spring.boot_security.demo.security.CustomUserDetails;
+import ru.kata.spring.boot_security.demo.security.UserDetailsImpl;
 import org.springframework.stereotype.Controller;
-import ru.kata.spring.boot_security.demo.services.CustomUserDetailsService;
-import ru.kata.spring.boot_security.demo.services.RoleService;
+import ru.kata.spring.boot_security.demo.services.UserDetailsServiceImpl;
+import ru.kata.spring.boot_security.demo.services.RoleServiceImpl;
 import ru.kata.spring.boot_security.demo.utils.UserValidator;
 
 import java.util.List;
@@ -26,15 +26,15 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
     private final UserValidator userValidator;
-    private final RoleService roleService;
-    private final CustomUserDetailsService userService;
+    private final RoleServiceImpl roleServiceImpl;
+    private final UserDetailsServiceImpl userService;
 
-    public AdminController(CustomUserDetailsService customUserDetailsService,
-                           RoleService roleService,
-                           CustomUserDetailsService userService,
+    public AdminController(UserDetailsServiceImpl userDetailsServiceImpl,
+                           RoleServiceImpl roleServiceImpl,
+                           UserDetailsServiceImpl userService,
                            UserValidator userValidator) {
         this.userService = userService;
-        this.roleService = roleService;
+        this.roleServiceImpl = roleServiceImpl;
         this.userValidator = userValidator;
     }
 
@@ -104,12 +104,12 @@ public class AdminController {
     private ModelAndView getModelAndView(String viewName) {
         ModelAndView modelAndView = new ModelAndView(viewName);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-        User user = userService.findOne(customUserDetails.getUser().getId());
+        UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authentication.getPrincipal();
+        User user = userService.findOne(userDetailsImpl.getUser().getId());
         modelAndView.addObject("user", user);
         modelAndView.addObject("users", userService.findAll());
         modelAndView.addObject("userForCreate", new User());
-        modelAndView.addObject("rolesForCreate", roleService.findAll());
+        modelAndView.addObject("rolesForCreate", roleServiceImpl.findAll());
         return modelAndView;
     }
 }

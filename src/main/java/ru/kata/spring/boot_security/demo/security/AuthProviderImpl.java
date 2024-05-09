@@ -1,6 +1,6 @@
 package ru.kata.spring.boot_security.demo.security;
 
-import ru.kata.spring.boot_security.demo.services.CustomUserDetailsService;
+import ru.kata.spring.boot_security.demo.services.UserDetailsServiceImpl;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,14 +13,14 @@ import java.util.Collections;
 
 @Component
 public class AuthProviderImpl implements AuthenticationProvider {
-    private final CustomUserDetailsService customUserDetailsService;
-    public AuthProviderImpl(CustomUserDetailsService customUserDetailsService) {
-        this.customUserDetailsService = customUserDetailsService;
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
+    public AuthProviderImpl(UserDetailsServiceImpl userDetailsServiceImpl) {
+        this.userDetailsServiceImpl = userDetailsServiceImpl;
     }
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
-        UserDetails personDetails = customUserDetailsService.loadUserByUsername(username);
+        UserDetails personDetails = userDetailsServiceImpl.loadUserByUsername(username);
         String password = authentication.getCredentials().toString();
         if (!password.equals(personDetails.getPassword())) {
             throw new BadCredentialsException("Incorrect password!");

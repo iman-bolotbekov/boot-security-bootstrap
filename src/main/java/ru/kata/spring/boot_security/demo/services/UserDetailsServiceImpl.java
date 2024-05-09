@@ -5,7 +5,7 @@ import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
-import ru.kata.spring.boot_security.demo.security.CustomUserDetails;
+import ru.kata.spring.boot_security.demo.security.UserDetailsImpl;
 
 import org.hibernate.Hibernate;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,13 +22,13 @@ import java.util.Set;
 
 @Service
 @Transactional(readOnly = true)
-public class CustomUserDetailsService implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
-    public CustomUserDetailsService(UserRepository userRepository,
-                                    RoleRepository roleRepository,
-                                    @Lazy PasswordEncoder passwordEncoder) {
+    public UserDetailsServiceImpl(UserRepository userRepository,
+                                  RoleRepository roleRepository,
+                                  @Lazy PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
@@ -40,7 +40,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found!");
         }
         Hibernate.initialize(user.get().getRoles());
-        return new CustomUserDetails(user.get());
+        return new UserDetailsImpl(user.get());
     }
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);

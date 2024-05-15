@@ -1,16 +1,16 @@
 package ru.kata.spring.boot_security.demo.utils;
 
-import ru.kata.spring.boot_security.demo.services.UserDetailsServiceImpl;
 import ru.kata.spring.boot_security.demo.models.User;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import ru.kata.spring.boot_security.demo.services.UserService;
 
 @Component
 public class UserValidator implements Validator {
-    private final UserDetailsServiceImpl userDetailsServiceImpl;
-    public UserValidator(UserDetailsServiceImpl userDetailsServiceImpl) {
-        this.userDetailsServiceImpl = userDetailsServiceImpl;
+    private final UserService userService;
+    public UserValidator(UserService userService) {
+        this.userService = userService;
     }
     @Override
     public boolean supports(Class<?> clazz) {
@@ -19,7 +19,7 @@ public class UserValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         User user = (User) target;
-        if (userDetailsServiceImpl.findByUsername(user.getUsername()).isPresent()) {
+        if (userService.findByUsername(user.getUsername()).isPresent()) {
             errors.rejectValue("username", "400", "Пользователь с таким именем уже существует");
         }
     }

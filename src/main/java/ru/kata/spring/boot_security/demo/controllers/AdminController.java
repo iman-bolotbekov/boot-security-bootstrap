@@ -17,8 +17,6 @@ import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.security.UserDetailsImpl;
 import org.springframework.stereotype.Controller;
 import ru.kata.spring.boot_security.demo.services.RoleService;
-import ru.kata.spring.boot_security.demo.services.UserDetailsServiceImpl;
-import ru.kata.spring.boot_security.demo.services.RoleServiceImpl;
 import ru.kata.spring.boot_security.demo.services.UserService;
 import ru.kata.spring.boot_security.demo.utils.UserValidator;
 
@@ -31,8 +29,8 @@ public class AdminController {
     private final RoleService roleService;
     private final UserService userService;
 
-    public AdminController(RoleServiceImpl roleService,
-                           UserDetailsServiceImpl userService,
+    public AdminController(RoleService roleService,
+                           UserService userService,
                            UserValidator userValidator) {
         this.userService = userService;
         this.roleService = roleService;

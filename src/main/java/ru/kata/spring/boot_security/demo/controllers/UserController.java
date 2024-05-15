@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.security.UserDetailsImpl;
-import ru.kata.spring.boot_security.demo.services.UserDetailsServiceImpl;
 import org.springframework.web.servlet.ModelAndView;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
@@ -15,7 +14,7 @@ import ru.kata.spring.boot_security.demo.services.UserService;
 @RequestMapping("/users")
 public class UserController {
     private final UserService service;
-    public UserController(UserDetailsServiceImpl service) {
+    public UserController(UserService service) {
         this.service = service;
     }
     @GetMapping

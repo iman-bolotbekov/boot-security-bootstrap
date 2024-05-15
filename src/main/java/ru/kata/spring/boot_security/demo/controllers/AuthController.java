@@ -4,7 +4,6 @@ import jakarta.validation.Valid;
 import org.springframework.web.servlet.ModelAndView;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.services.RegistrationService;
-import ru.kata.spring.boot_security.demo.services.RegistrationServiceImpl;
 import ru.kata.spring.boot_security.demo.utils.UserValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AuthController {
     private final UserValidator userValidator;
     private final RegistrationService registerService;
-    public AuthController(UserValidator userValidator, RegistrationServiceImpl registerService) {
+    public AuthController(UserValidator userValidator, RegistrationService registerService) {
         this.userValidator = userValidator;
         this.registerService = registerService;
     }

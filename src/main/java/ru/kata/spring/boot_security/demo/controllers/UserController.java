@@ -9,11 +9,12 @@ import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.security.UserDetailsImpl;
 import ru.kata.spring.boot_security.demo.services.UserDetailsServiceImpl;
 import org.springframework.web.servlet.ModelAndView;
+import ru.kata.spring.boot_security.demo.services.UserService;
 
 @Controller
 @RequestMapping("/users")
 public class UserController {
-    private final UserDetailsServiceImpl service;
+    private final UserService service;
     public UserController(UserDetailsServiceImpl service) {
         this.service = service;
     }

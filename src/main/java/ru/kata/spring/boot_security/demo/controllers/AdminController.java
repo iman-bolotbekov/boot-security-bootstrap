@@ -16,8 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.security.UserDetailsImpl;
 import org.springframework.stereotype.Controller;
+import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserDetailsServiceImpl;
 import ru.kata.spring.boot_security.demo.services.RoleServiceImpl;
+import ru.kata.spring.boot_security.demo.services.UserService;
 import ru.kata.spring.boot_security.demo.utils.UserValidator;
 
 import java.util.List;
@@ -26,15 +28,14 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
     private final UserValidator userValidator;
-    private final RoleServiceImpl roleServiceImpl;
-    private final UserDetailsServiceImpl userService;
+    private final RoleService roleService;
+    private final UserService userService;
 
-    public AdminController(UserDetailsServiceImpl userDetailsServiceImpl,
-                           RoleServiceImpl roleServiceImpl,
+    public AdminController(RoleServiceImpl roleService,
                            UserDetailsServiceImpl userService,
                            UserValidator userValidator) {
         this.userService = userService;
-        this.roleServiceImpl = roleServiceImpl;
+        this.roleService = roleService;
         this.userValidator = userValidator;
     }
 
@@ -109,7 +110,7 @@ public class AdminController {
         modelAndView.addObject("user", user);
         modelAndView.addObject("users", userService.findAll());
         modelAndView.addObject("userForCreate", new User());
-        modelAndView.addObject("rolesForCreate", roleServiceImpl.findAll());
+        modelAndView.addObject("rolesForCreate", roleService.findAll());
         return modelAndView;
     }
 }

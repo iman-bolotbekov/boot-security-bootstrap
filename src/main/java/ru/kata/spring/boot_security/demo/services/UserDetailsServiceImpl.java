@@ -22,7 +22,7 @@ import java.util.Set;
 
 @Service
 @Transactional(readOnly = true)
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserDetailsServiceImpl extends UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;

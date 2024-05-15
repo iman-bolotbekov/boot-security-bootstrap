@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.demo.controllers;
 import jakarta.validation.Valid;
 import org.springframework.web.servlet.ModelAndView;
 import ru.kata.spring.boot_security.demo.models.User;
+import ru.kata.spring.boot_security.demo.services.RegistrationService;
 import ru.kata.spring.boot_security.demo.services.RegistrationServiceImpl;
 import ru.kata.spring.boot_security.demo.utils.UserValidator;
 import org.springframework.stereotype.Controller;
@@ -16,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/auth")
 public class AuthController {
     private final UserValidator userValidator;
-    private final RegistrationServiceImpl registrationServiceImpl;
-    public AuthController(UserValidator userValidator, RegistrationServiceImpl registrationServiceImpl) {
+    private final RegistrationService registerService;
+    public AuthController(UserValidator userValidator, RegistrationServiceImpl registerService) {
         this.userValidator = userValidator;
-        this.registrationServiceImpl = registrationServiceImpl;
+        this.registerService = registerService;
     }
     @GetMapping("/login")
     public ModelAndView loginPage() {
@@ -38,7 +39,7 @@ public class AuthController {
             modelAndView.setViewName("auth/registration");
             return modelAndView;
         }
-        this.registrationServiceImpl.register(user);
+        this.registerService.register(user);
         modelAndView.setViewName("redirect:/auth/login");
         return modelAndView;
     }
